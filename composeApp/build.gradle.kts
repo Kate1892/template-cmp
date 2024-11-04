@@ -7,7 +7,7 @@ plugins {
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kspCompose)
-    alias(libs.plugins.room)
+//    alias(libs.plugins.room)
 //    alias(libs.plugins.kotlinCocoapods)
     alias(libs.plugins.kotlin.serialization)
 }
@@ -20,7 +20,7 @@ kotlin {
     androidTarget {
         @OptIn(ExperimentalKotlinGradlePluginApi::class)
         compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
+            jvmTarget.set(JvmTarget.JVM_17)
         }
     }
 
@@ -41,10 +41,13 @@ kotlin {
             implementation(libs.androidx.activity.compose)
             implementation(libs.koin.android)
             implementation(libs.koin.androidx.compose)
-            implementation(libs.room.runtime.android)
+//            implementation(libs.room.runtime.android)
             implementation(libs.ktor.client.okhttp)
+            implementation(libs.ktor.client.android)
         }
         commonMain.dependencies {
+//            implementation(project(":core:network"))
+
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
@@ -53,8 +56,8 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.kottie.animation)
             implementation(libs.kotlinx.datetime)
-            implementation(libs.room.runtime)
-            implementation(libs.sqlite.bundled)
+//            implementation(libs.room.runtime)
+//            implementation(libs.sqlite.bundled)
             api(libs.koin.core)
             implementation(libs.core.splashscreen)
             implementation(libs.koin.compose)
@@ -63,6 +66,16 @@ kotlin {
             implementation(libs.navigation.compose)
             implementation(libs.bundles.ktor)
             implementation(libs.kotlinx.serialization.json)
+
+            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.client.auth)
+//            implementation(libs.ktor.client.negotiation)
+            implementation(libs.ktor.client.logging)
+            implementation(libs.ktor.serialization.kotlinx.json)
+        }
+
+        iosMain.dependencies {
+            implementation(libs.ktor.client.ios)
         }
     }
 }
@@ -93,8 +106,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     buildFeatures {
         compose = true
@@ -104,17 +117,17 @@ android {
     }
 }
 
-room {
-    schemaDirectory("$projectDir/schemas")
-}
+//room {
+//    schemaDirectory("$projectDir/schemas")
+//}
 
-dependencies {
-//    implementation(libs.ui.tooling.preview.android)
-    add("kspCommonMainMetadata", libs.room.compiler)
-}
-
-tasks.withType<org.jetbrains.kotlin.gradle.dsl.KotlinCompile<*>>().configureEach {
-    if (name != "kspCommonMainKotlinMetadata") {
-        dependsOn("kspCommonMainKotlinMetadata")
-    }
-}
+//dependencies {
+////    implementation(libs.ui.tooling.preview.android)
+//    add("kspCommonMainMetadata", libs.room.compiler)
+//}
+//
+//tasks.withType<org.jetbrains.kotlin.gradle.dsl.KotlinCompile<*>>().configureEach {
+//    if (name != "kspCommonMainKotlinMetadata") {
+//        dependsOn("kspCommonMainKotlinMetadata")
+//    }
+//}

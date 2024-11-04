@@ -1,37 +1,20 @@
 package com.template.cmp
 
+import android.annotation.SuppressLint
+import android.content.pm.ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 import android.os.Bundle
+import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.runtime.Composable
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.fragment.app.FragmentActivity
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
-import com.template.cmp.theme.NoteTheme
 
-class MainActivity : FragmentActivity() {
+class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        @SuppressLint("SourceLockedOrientationActivity")
+        requestedOrientation = SCREEN_ORIENTATION_PORTRAIT
         installSplashScreen()
-
         setContent {
-            // TODO
-//            MainActivityView()
-            NoteTheme {
-//                NavGraph(navController = navController)
-                App(
-//                    client = remember {
-//                        InsultCensorClient(createHttpClient(OkHttp.create()))
-//                    }
-                )
-            }
+            App()
         }
-    }
-
-    @Composable
-    private fun MainActivityView(
-        navController: NavHostController = rememberNavController(),
-    ) {
-
     }
 }

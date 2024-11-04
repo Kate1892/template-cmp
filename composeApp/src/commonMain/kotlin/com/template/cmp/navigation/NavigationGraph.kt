@@ -1,54 +1,28 @@
 package navigation
 
-import androidx.compose.animation.AnimatedContentTransitionScope
-import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.toRoute
-import com.template.cmp.features.profile.ui.ProfileScreen
-import com.template.cmp.features.task.notes.ui.NotesScreen
-import com.template.cmp.navigation.NavigationScreen
+import com.template.cmp.navigation.NavigationAction
+import com.template.cmp.navigation.initRoutes
+import com.template.cmp.theme.NoteTheme
 
 @Composable
 fun NavigationGraph(navController: NavHostController) {
     NavHost(
         navController = navController,
-        startDestination = NavigationScreen.NoteList,
-        enterTransition = {
-            slideIntoContainer(
-                AnimatedContentTransitionScope.SlideDirection.Left,
-                animationSpec = tween(200)
-            )
-        },
-        exitTransition = {
-            slideOutOfContainer(
-                AnimatedContentTransitionScope.SlideDirection.Left,
-                animationSpec = tween(200)
-            )
-        },
-        popEnterTransition = {
-            slideIntoContainer(
-                AnimatedContentTransitionScope.SlideDirection.Right,
-                animationSpec = tween(200)
-            )
-        },
-        popExitTransition = {
-            slideOutOfContainer(
-                AnimatedContentTransitionScope.SlideDirection.Right,
-                animationSpec = tween(200)
-            )
-        },
+        startDestination = NavigationAction.NavigateToSplash,
+        enterTransition = { fadeIn() },
+        exitTransition = { fadeOut() },
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = NoteTheme.colors.screenBackground)
     ) {
-        composable<NavigationScreen.NoteList> {
-            NotesScreen()
-        }
-        composable<NavigationScreen.Profile> {
-            val args = it.toRoute<NavigationScreen.Profile>()
-            ProfileScreen(
-//                name = args.name!!
-            )
-        }
+        initRoutes()
     }
 }

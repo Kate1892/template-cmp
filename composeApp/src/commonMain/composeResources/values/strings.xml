@@ -1,3 +1,12 @@
 <resources>
     <string name="scr_any_error">Error</string>
+
+    <string name="scr_splash_screen_title">Notes</string>
+
+    <string name="scr_login_screen_title">Template.Notes</string>
+    <string name="scr_login_screen_description">Log in or create an account</string>
+    <string name="scr_login_continue_button_title">Continue</string>
+    <string name="scr_login_email_title">Email</string>
+    <string name="scr_login_password_title">Password</string>
+
 </resources>
