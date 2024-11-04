@@ -1,10 +1,10 @@
 package com.template.cmp
 
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.template.cmp.navigation.NavigationService
+import com.template.cmp.theme.NoteTheme
 import navigation.NavigationGraph
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.mp.KoinPlatformTools
@@ -13,13 +13,13 @@ import org.koin.mp.KoinPlatformTools
 @Preview
 @Composable
 fun App() {
-    val navController: NavHostController = rememberNavController()
     val navigationService
             by KoinPlatformTools.defaultContext().get().inject<NavigationService>()
 
-    navigationService.setNavController(navController)
+    NoteTheme {
+        val navController: NavHostController = rememberNavController()
+        navigationService.setNavController(navController)
 
-    MaterialTheme {
         NavigationGraph(navController = navController)
     }
 }

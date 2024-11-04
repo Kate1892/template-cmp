@@ -24,9 +24,26 @@ class NavigationService {
         navController.addOnDestinationChangedListener(onDestinationChangedListener)
     }
 
-    fun navigate(T: Any) {
+    fun navigate(action: NavigationAction) {
         navController?.run {
-            navigate(T)
+            when (action) {
+                NavigationAction.NavigateBack -> navigateUp()
+
+                NavigationAction.NavigateToSplash,
+                NavigationAction.NavigateToNotes,
+                NavigationAction.NavigateToLogin
+                    -> {
+                    navigate(action) {
+                        if (action.fromRoot) {
+                            popUpTo(0)
+                        }
+                        launchSingleTop = true
+                    }
+                }
+
+
+                NavigationAction.NavigateToCreateNote -> {}
+            }
         }
     }
 }
