@@ -1,17 +1,31 @@
 package com.template.cmp.common.view
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import com.template.cmp.common.mvvm.DefaultUiEvent
 import com.template.cmp.common.mvvm.LceState
 
 @Composable
 fun BaseScreen(
     lceState: LceState,
 //    defaultEffectFlow: SharedFlow<DefaultViewModelEffect>,
-//    onDefaultUiEvent: (DefaultUiEvent) -> Unit,
+    onDefaultUiEvent: (DefaultUiEvent) -> Unit,
     content: @Composable () -> Unit,
 ) {
+    DisposableEffect(Unit) {
+        onDefaultUiEvent(DefaultUiEvent.OnScreenCreated)
+
+        onDispose {
+            onDefaultUiEvent(DefaultUiEvent.OnScreenDestroyed)
+        }
+    }
+
     content()
+
     LceStateHandlerView(lceState = lceState)
+
+
 }
 
 @Composable

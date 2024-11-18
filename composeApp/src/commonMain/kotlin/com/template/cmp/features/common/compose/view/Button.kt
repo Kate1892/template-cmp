@@ -9,7 +9,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
 import com.template.cmp.theme.NoteShapes
@@ -31,7 +30,7 @@ fun NotePrimaryButton(
             .fillMaxWidth()
             .height(48.dp)
             .clip(NoteShapes.primary)
-            .background(color = if (isEnabled) NoteTheme.colors.buttonPrimary else Color.Gray)
+            .background(color = NoteTheme.colors.buttonAccent)
             .clickable(
                 enabled = isEnabled,
                 onClick = {
@@ -42,8 +41,8 @@ fun NotePrimaryButton(
     ) {
         NoteText(
             text = text,
-            style = NoteTypography().titleLarge,
-            color = Color.Red
+            style = NoteTypography().bodyLarge,
+            color = NoteTheme.colors.buttonAccentText,
         )
     }
 }

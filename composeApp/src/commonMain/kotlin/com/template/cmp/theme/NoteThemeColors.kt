@@ -6,8 +6,11 @@ import androidx.compose.ui.graphics.Color
 @Stable
 data class NoteThemeColors(
     val textPrimary: Color,
+    val textAccent: Color,
     val buttonPrimary: Color,
     val buttonPrimaryText: Color,
+    val buttonAccent: Color,
+    val buttonAccentText: Color,
     val inputField: Color,
     val inputFieldHintText: Color,
     val screenBackground: Color,
@@ -19,11 +22,14 @@ data class NoteThemeColors(
 
 val NotePallet: NoteThemeColors = NoteThemeColors(
     textPrimary = NoteColors.black,
-    buttonPrimary = NoteColors.white,
-    buttonPrimaryText = NoteColors.grey,
+    textAccent = NoteColors.white,
+    buttonPrimary = NoteColors.primary,
+    buttonPrimaryText = NoteColors.white,
+    buttonAccent = NoteColors.white,
+    buttonAccentText = NoteColors.primary,
     inputField = NoteColors.fieldBackground,
     inputFieldHintText = NoteColors.grey,
-    screenBackground = NoteColors.white,
+    screenBackground = NoteColors.primary,
 
     purpleGradientStartColor = NoteColors.purpleGradientStart,
     purpleGradientMiddleColor = NoteColors.purpleGradientMiddle,

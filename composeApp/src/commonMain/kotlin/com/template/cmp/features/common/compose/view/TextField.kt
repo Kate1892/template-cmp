@@ -129,9 +129,7 @@ fun NoteBasicTextField(
                 val newValue = if (!isEmojiAllowed) {
                     buildString {
                         value.forEach { char ->
-//                            if (!emojiValidationService.isEmoji(char)) {
                             append(char)
-//                            }
                         }
                     }
                 } else {
@@ -253,7 +251,7 @@ private fun InputBaseContent(
                             )
                             .fillMaxHeight()
                             .wrapContentHeight(align = Alignment.CenterVertically),
-                        style = NoteTypography().bodyLarge.copy(fontSize = 14.sp),
+                        style = NoteTypography().bodyMedium,
                         color = NoteTheme.colors.inputFieldHintText,
                     )
                 }

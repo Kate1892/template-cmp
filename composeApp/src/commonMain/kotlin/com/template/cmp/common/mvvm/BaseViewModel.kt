@@ -18,6 +18,7 @@ import org.koin.mp.KoinPlatformTools
 @Stable
 interface UiEventReducer<TUiEvent : UiEvent> {
     fun onUiEvent(event: TUiEvent)
+    fun onDefaultUiEvent(event: DefaultUiEvent)
 }
 
 abstract class BaseViewModel<
@@ -41,6 +42,7 @@ abstract class BaseViewModel<
     /** State */
     @Suppress("RemoveExplicitTypeArguments")
     private val _stateFlow =
+
         MutableStateFlow<ScreenState<TState>>(ScreenState(state = initialState))
     val stateFlow get() = _stateFlow.asStateFlow()
     val state: TState get() = stateFlow.value.state
@@ -118,11 +120,46 @@ abstract class BaseViewModel<
         navigationService.navigate(navigationAction)
     }
 
-//    protected open fun processBackClicked() {
-//        navigateBack()
-//    }
-//
-//    protected fun navigateBack() {
-//        navigationService.navigateBack()
-//    }
+    override fun onDefaultUiEvent(event: DefaultUiEvent) {
+        if (!singleClickService.isClickAllowed(event)) {
+            return
+        }
+
+        when (event) {
+            DefaultUiEvent.OnScreenCreated -> {
+                subscribeDataWithUiLifecycle()
+                if (!isScreenDataInitialized) {
+                    isScreenDataInitialized = true
+                    initializeScreenData()
+                }
+                onScreenCreated()
+            }
+
+            DefaultUiEvent.OnScreenResumed -> onScreenResumed()
+            DefaultUiEvent.OnScreenDestroyed -> {
+                unsubscribeDataWithUiLifecycle()
+                onScreenDestroyed()
+            }
+
+            DefaultUiEvent.OnBackClicked -> processBackClicked()
+        }
+    }
+
+
+    protected open fun onScreenResumed() = Unit
+
+    protected open fun onBottomSheetClosed() = Unit
+
+    protected open fun onScreenDestroyed() = Unit
+
+    protected open fun onScreenCreated() = Unit
+
+
+    protected open fun processBackClicked() {
+        navigateBack()
+    }
+
+    protected fun navigateBack() {
+        navigationService.navigate(NavigationAction.NavigateBack)
+    }
 }

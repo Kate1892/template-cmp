@@ -7,5 +7,6 @@ data class LoginState(
     val screenDescription: String = "",
     val continueButtonTitle: String = "",
     val isContinueButtonEnabled: Boolean = false,
-    val emailFieldState: TextFieldState = TextFieldState(),
-)
+    val userNameFieldState: TextFieldState = TextFieldState(),
+    val passwordFieldState: TextFieldState = TextFieldState(),
+    )

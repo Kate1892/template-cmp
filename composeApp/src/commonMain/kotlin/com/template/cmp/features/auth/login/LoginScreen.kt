@@ -1,15 +1,23 @@
 package com.template.cmp.features.auth.login
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.windowInsetsTopHeight
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -40,6 +48,7 @@ fun LoginScreen(
 
     BaseScreen(
         lceState = state.lceState,
+        onDefaultUiEvent = viewModel::onDefaultUiEvent,
     ) {
         LoginScreenView(
             state = state.state,
@@ -53,34 +62,58 @@ private fun LoginScreenView(
     state: LoginState,
     onUiEvent: (LoginUiEvent) -> Unit,
 ) {
+    val gradient = Brush.linearGradient(
+        colors = listOf(
+            NoteTheme.colors.purpleGradientStartColor,
+            NoteTheme.colors.purpleGradientMiddleColor,
+            NoteTheme.colors.purpleGradientStartColor
+        ),
+    )
     Column(
         modifier = Modifier
             .fillMaxSize()
             .imePadding()
-    ) {
+            .background(gradient),
+        ) {
+        Spacer(
+            Modifier
+                .windowInsetsTopHeight(WindowInsets.statusBars)
+                .background(Color.Transparent)
+        )
+        VSpacer(16.dp)
+        NoteText(
+            modifier = Modifier.padding(horizontal = 16.dp),
+            text = state.screenTitle,
+            style = NoteTypography().titleMedium,
+            color = NoteTheme.colors.textAccent,
+        )
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp)
                 .weight(1f),
             horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
         ) {
-            NoteText(
-                text = state.screenTitle,
-                style = NoteTypography().titleLarge,
-            )
             VSpacer(16.dp)
             NoteText(
                 text = state.screenDescription,
                 style = NoteTypography().titleSmall,
-                color = NoteTheme.colors.textPrimary,
+                color = NoteTheme.colors.textAccent,
             )
-            VSpacer(16.dp)
+            VSpacer(24.dp)
             NoteTextField(
-                fieldState = state.emailFieldState,
+                fieldState = state.userNameFieldState,
                 onValueChange = { },
                 onFocusChange = { },
             )
+            VSpacer(16.dp)
+            NoteTextField(
+                fieldState = state.passwordFieldState,
+                onValueChange = { },
+                onFocusChange = { },
+            )
+            VSpacer(16.dp)
         }
         NotePrimaryButton(
             modifier = Modifier.padding(16.dp),

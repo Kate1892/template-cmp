@@ -9,4 +9,6 @@ import org.koin.dsl.module
 actual val platformModule: Module
     get() = module {
         singleOf(::DbClient)
+//        single<PeopleDatabase> { g(get()) }
+
     }

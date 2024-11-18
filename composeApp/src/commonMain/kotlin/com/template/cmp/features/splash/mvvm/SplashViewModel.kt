@@ -19,7 +19,7 @@ class SplashViewModel : BaseViewModel<UiEvent, SplashState>(SplashState()) {
 
     init {
         viewModelScope.launch {
-            @Suppress("MagicNumber") delay(1000L)
+            @Suppress("MagicNumber") delay(2000L)
             navigate(NavigationAction.NavigateToLogin)
         }
 

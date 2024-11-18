@@ -4,12 +4,11 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
+    alias(libs.plugins.kotlinSerialization)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.room)
     alias(libs.plugins.jetbrainsCompose)
-    alias(libs.plugins.compose.compiler)
-    alias(libs.plugins.kspCompose)
-//    alias(libs.plugins.room)
-//    alias(libs.plugins.kotlinCocoapods)
-    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.composeCompiler)
 }
 
 kotlin {
@@ -37,39 +36,51 @@ kotlin {
 
     sourceSets {
         androidMain.dependencies {
-            implementation(compose.preview)
+//            implementation(compose.preview)
+//            implementation(libs.androidx.activity.compose)
+//            implementation(libs.koin.android)
+//            implementation(libs.koin.androidx.compose)
+
             implementation(libs.androidx.activity.compose)
             implementation(libs.koin.android)
             implementation(libs.koin.androidx.compose)
-//            implementation(libs.room.runtime.android)
+
             implementation(libs.ktor.client.okhttp)
             implementation(libs.ktor.client.android)
+
+            implementation(libs.androidx.compose.ui.tooling)
+
         }
         commonMain.dependencies {
-//            implementation(project(":core:network"))
+            implementation(libs.kotlinx.coroutines)
+            implementation(libs.kotlinx.serialization)
+            api(libs.kotlinx.datetime)
 
+            implementation(compose.ui)
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
-            implementation(compose.ui)
             implementation(compose.components.resources)
+            implementation(libs.core.splashscreen)
+
             implementation(compose.components.uiToolingPreview)
             implementation(libs.kottie.animation)
             implementation(libs.kotlinx.datetime)
-//            implementation(libs.room.runtime)
-//            implementation(libs.sqlite.bundled)
+
             api(libs.koin.core)
-            implementation(libs.core.splashscreen)
             implementation(libs.koin.compose)
             implementation(libs.koin.composeVM)
-            implementation(libs.lifecycle.viewmodel)
+            api(libs.androidx.lifecycle.viewmodel)
+
+            implementation(libs.androidx.room.runtime)
+            implementation(libs.sqlite.bundled)
+
             implementation(libs.navigation.compose)
             implementation(libs.bundles.ktor)
             implementation(libs.kotlinx.serialization.json)
 
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.auth)
-//            implementation(libs.ktor.client.negotiation)
             implementation(libs.ktor.client.logging)
             implementation(libs.ktor.serialization.kotlinx.json)
         }
@@ -115,6 +126,14 @@ android {
     dependencies {
         debugImplementation(compose.uiTooling)
     }
+}
+
+dependencies {
+    ksp(libs.androidx.room.compiler)
+}
+
+room {
+    schemaDirectory("$projectDir/schemas")
 }
 
 //room {

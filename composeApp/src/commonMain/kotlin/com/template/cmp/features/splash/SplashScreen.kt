@@ -1,21 +1,25 @@
 package com.template.cmp.features.splash
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.scaleIn
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.template.cmp.common.view.BaseScreen
@@ -32,6 +36,8 @@ fun NavGraphBuilder.navRouteSplash() {
     }
 }
 
+private const val ANIMATION_DURATION = 500
+
 @Composable
 fun SplashScreen(
     viewModel: SplashViewModel = koinViewModel()
@@ -40,8 +46,7 @@ fun SplashScreen(
 
     BaseScreen(
         lceState = state.lceState,
-//        defaultEffectFlow = viewModel.defaultEffectFlow,
-//        onDefaultUiEvent = viewModel::onDefaultUiEvent,
+        onDefaultUiEvent = viewModel::onDefaultUiEvent,
     ) {
         SplashScreenView(state = state.state)
     }
@@ -53,27 +58,36 @@ fun SplashScreen(
 private fun SplashScreenView(
     state: SplashState,
 ) {
+    var isVisible by remember { mutableStateOf(false) }
+
+    val gradient = Brush.linearGradient(
+        colors = listOf(
+            NoteTheme.colors.purpleGradientStartColor,
+            NoteTheme.colors.purpleGradientMiddleColor,
+            NoteTheme.colors.purpleGradientStartColor
+        ),
+    )
     Box(
         modifier = Modifier
             .fillMaxSize()
             .imePadding()
-            .background(NoteTheme.colors.screenBackground),
+            .background(gradient),
         contentAlignment = Alignment.Center,
     ) {
-        Column {
+        AnimatedVisibility(
+            visible = isVisible,
+            enter = fadeIn(animationSpec = tween(ANIMATION_DURATION)) +
+                    scaleIn(animationSpec = tween(ANIMATION_DURATION)),
+        ) {
             Text(
-                text = "HI!",
+                text = state.screenTitle,
                 style = NoteTypography().titleLarge,
                 textAlign = TextAlign.Center,
-                color = Color.Red,
-            )
-            Spacer(modifier = Modifier.height(20.dp))
-            Text(
-                text = "from out heart",
-                style = NoteTypography().titleSmall,
-                textAlign = TextAlign.Center,
-                color = Color.Red,
+                color = NoteTheme.colors.textAccent,
             )
         }
+    }
+    LaunchedEffect(Unit) {
+        isVisible = true
     }
 }

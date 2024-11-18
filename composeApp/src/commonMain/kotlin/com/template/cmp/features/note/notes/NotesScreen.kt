@@ -1,4 +1,4 @@
-package com.template.cmp.features.note.notes.ui
+package com.template.cmp.features.note.notes
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -40,6 +40,7 @@ fun NotesScreen(
 
     BaseScreen(
         lceState = state.lceState,
+        onDefaultUiEvent = viewModel::onDefaultUiEvent,
     ) {
         NotesScreenView(
             state = state.state,
