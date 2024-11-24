@@ -1,4 +1,5 @@
 package com.themplate.cmp
+import io.github.alexzhirkevich.cupertino.adaptive.Theme
 
 import android.os.Build
 
@@ -7,3 +8,5 @@ class AndroidPlatform : Platform {
 }
 
 actual fun getPlatform(): Platform = AndroidPlatform()
+
+actual fun determineTheme(): Theme = Theme.Material3

@@ -1,39 +1,81 @@
 package com.themplate.cmp
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import org.jetbrains.compose.resources.getString
-import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
+import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveAlertDialog
+import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveNavigationBar
+import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveNavigationBarItem
+import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveScaffold
+import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveTopAppBar
+import io.github.alexzhirkevich.cupertino.adaptive.ExperimentalAdaptiveApi
+import io.github.alexzhirkevich.cupertino.default
 
-import template_cmp.composeapp.generated.resources.Res
-import template_cmp.composeapp.generated.resources.compose_multiplatform
-import template_cmp.composeapp.generated.resources.ic_student
-
+@OptIn(ExperimentalAdaptiveApi::class)
 @Composable
-@Preview
 fun App() {
-    MaterialTheme {
-        var showContent by remember { mutableStateOf(false) }
-        Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-            Button(onClick = { showContent = !showContent }) {
-                Text("Click me!")
-            }
-            AnimatedVisibility(showContent) {
-                val greeting = remember { Greeting().greet() }
-                Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-                    Image(painterResource(Res.drawable.ic_student), null)
-                    Text(text = getString(Res.string.scr_any_error))
+    AppTheme {
+        var activeTab by remember { mutableStateOf(Tabs.Home) }
+        var showDialog by remember { mutableStateOf(false) }
+
+        if (showDialog) {
+            AdaptiveAlertDialog(
+                title = { Text("Contact info") },
+                message = { Text("Contact info could be here!") },
+                buttons = {
+                    default(onClick = { showDialog = false }) { Text("OK") }
+                },
+                onDismissRequest = { showDialog = false }
+            )
+        }
+
+        AdaptiveScaffold(
+            topBar = {
+                AdaptiveTopAppBar(
+                    title = { Text("Cupertino Sample") },
+                    actions = {
+                        IconButton(onClick = { showDialog = true }) {
+                            Icon(Icons.Filled.Email, contentDescription = null)
+                        }
+                    }
+                )
+            },
+            bottomBar = {
+                AdaptiveNavigationBar {
+                    AdaptiveNavigationBarItem(
+                        selected = activeTab == Tabs.Home,
+                        icon = { Icon(Icons.Filled.Home, contentDescription = null) },
+                        label = { Text("Home") },
+                        onClick = { activeTab = Tabs.Home }
+                    )
+                    AdaptiveNavigationBarItem(
+                        selected = activeTab == Tabs.About,
+                        icon = { Icon(Icons.Filled.Info, contentDescription = null) },
+                        label = { Text("Settings") },
+                        onClick = { activeTab = Tabs.About }
+                    )
                 }
+            }
+        ) {
+            when (activeTab) {
+                Tabs.Home -> MainTab(Modifier.padding(it))
+                Tabs.About -> AboutTab(Modifier.padding(it))
             }
         }
     }
+}
+
+enum class Tabs {
+    Home, About
 }
