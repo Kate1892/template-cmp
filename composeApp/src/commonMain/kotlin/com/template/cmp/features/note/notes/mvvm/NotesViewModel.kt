@@ -1,26 +1,26 @@
 package com.template.cmp.features.note.notes.mvvm
 
-import androidx.lifecycle.viewModelScope
 import com.template.cmp.common.mvvm.BaseViewModel
-import com.template.cmp.network.features.auth.AuthRepository
-import kotlinx.coroutines.launch
-import org.koin.mp.KoinPlatformTools
+import com.template.cmp.navigation.NavigationAction
+import org.jetbrains.compose.resources.getString
+import template_cmp.composeapp.generated.resources.Res
+import template_cmp.composeapp.generated.resources.scr_notes_logout_button_title
+import template_cmp.composeapp.generated.resources.scr_notes_screen_title
 
 class NotesViewModel : BaseViewModel<NotesUiEvent, NotesState>(NotesState()) {
 
-    private val authRepository
-            by KoinPlatformTools.defaultContext().get().inject<AuthRepository>()
-
-
     override fun processUiEvent(event: NotesUiEvent) {
         when (event) {
-            NotesUiEvent.OnProfileButtonClicked -> {
-                viewModelScope.launch {
-//                    when (authRepository.auth()) {
-//
-//                    }
-                }
+            NotesUiEvent.OnLogoutButtonClicked -> {
+                navigate(NavigationAction.NavigateBackToLogin())
             }
         }
+    }
+
+    override fun initScreenStrings(): suspend NotesState.() -> NotesState = {
+        copy(
+            text = getString(Res.string.scr_notes_screen_title),
+            logoutButtonTitle = getString(Res.string.scr_notes_logout_button_title)
+        )
     }
 }

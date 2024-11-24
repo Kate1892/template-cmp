@@ -23,12 +23,13 @@ class SplashViewModel : BaseViewModel<UiEvent, SplashState>(SplashState()) {
             navigate(NavigationAction.NavigateToLogin)
         }
 
-        tryehj()
+        funForTestKtor()
     }
 
-    private fun tryehj() {
+    private fun funForTestKtor() {
         viewModelScope.launch {
             authRepository.auth()
+            authRepository.addPerson()
         }
     }
 

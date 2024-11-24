@@ -10,14 +10,3 @@ object NoteTheme {
         @ReadOnlyComposable
         get() = LocalNoteColors.current
 }
-
-//@OptIn(ExperimentalMaterial3Api::class)
-//val EpsRippleConfiguration = RippleConfiguration(
-//    color = EpsColors.rippleColor,
-//    rippleAlpha = RippleAlpha(
-//        draggedAlpha = 0.3f,
-//        focusedAlpha = 0.3f,
-//        hoveredAlpha = 0.3f,
-//        pressedAlpha = 0.3f,
-//    )
-//)

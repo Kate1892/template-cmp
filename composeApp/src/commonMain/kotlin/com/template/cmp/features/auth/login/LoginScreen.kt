@@ -118,7 +118,7 @@ private fun LoginScreenView(
         NotePrimaryButton(
             modifier = Modifier.padding(16.dp),
             text = state.continueButtonTitle,
-//            isEnabled = state.isContinueButtonEnabled,
+            isEnabled = state.isContinueButtonEnabled,
             onClick = { onUiEvent(LoginUiEvent.OnContinueButtonClicked) },
         )
     }

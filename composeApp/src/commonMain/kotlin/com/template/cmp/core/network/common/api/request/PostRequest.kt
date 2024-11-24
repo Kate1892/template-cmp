@@ -21,7 +21,6 @@ class PostRequest(
         url: String,
         requestBody: String,
     ) {
-//    : NoteApiResponse<T> {
         return with(apiHttpClient.client) {
             try {
                 val response = post {

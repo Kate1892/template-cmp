@@ -1,15 +1,19 @@
 package com.template.cmp.network.features.auth
 
 import com.template.cmp.core.network.auth.AuthApi
-import com.template.cmp.core.network.common.remoteresult.RemoteResult
+import com.template.cmp.database.PeopleDao
+import com.template.cmp.database.Person
 
 class AuthRepository(
     private val authApi: AuthApi,
+    private val peopleDao: PeopleDao,
 ) {
 
-    suspend fun auth(){
-//    : RemoteResult<Unit> {
-        val authResult = authApi.login()
-//        return RemoteResult.Success<Unit>(Unit)
+    suspend fun auth() {
+        val authResult = authApi.mockLogin()
+    }
+
+    suspend fun addPerson() {
+        peopleDao.upsert(Person("123"))
     }
 }

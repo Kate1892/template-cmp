@@ -31,7 +31,8 @@ class NavigationService {
 
                 NavigationAction.NavigateToSplash,
                 NavigationAction.NavigateToNotes,
-                NavigationAction.NavigateToLogin
+                NavigationAction.NavigateToLogin,
+                NavigationAction.NavigateToCheckPermission,
                     -> {
                     navigate(action) {
                         if (action.fromRoot) {
@@ -43,6 +44,9 @@ class NavigationService {
 
 
                 NavigationAction.NavigateToCreateNote -> {}
+                is NavigationAction.NavigateBackToLogin -> {
+                    popBackStack(action.targetRoute, false)
+                }
             }
         }
     }

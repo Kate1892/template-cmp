@@ -12,10 +12,6 @@ plugins {
 }
 
 kotlin {
-    sourceSets.commonMain {
-        kotlin.srcDir("build/generated/ksp/metadata")
-    }
-
     androidTarget {
         @OptIn(ExperimentalKotlinGradlePluginApi::class)
         compilerOptions {
@@ -34,12 +30,13 @@ kotlin {
         }
     }
 
+    room {
+        schemaDirectory("$projectDir/schemas")
+    }
+
     sourceSets {
         androidMain.dependencies {
-//            implementation(compose.preview)
-//            implementation(libs.androidx.activity.compose)
-//            implementation(libs.koin.android)
-//            implementation(libs.koin.androidx.compose)
+            implementation(compose.preview)
 
             implementation(libs.androidx.activity.compose)
             implementation(libs.koin.android)
@@ -71,6 +68,7 @@ kotlin {
             implementation(libs.koin.compose)
             implementation(libs.koin.composeVM)
             api(libs.androidx.lifecycle.viewmodel)
+            api(libs.androidx.lifecycle.viewmodel.compose) // for moko
 
             implementation(libs.androidx.room.runtime)
             implementation(libs.sqlite.bundled)
@@ -83,10 +81,17 @@ kotlin {
             implementation(libs.ktor.client.auth)
             implementation(libs.ktor.client.logging)
             implementation(libs.ktor.serialization.kotlinx.json)
+
+            api(libs.moko.permissions)
+            api(libs.moko.permissions.compose)
         }
 
         iosMain.dependencies {
             implementation(libs.ktor.client.ios)
+        }
+
+        dependencies {
+            ksp(libs.androidx.room.compiler)
         }
     }
 }
@@ -123,30 +128,4 @@ android {
     buildFeatures {
         compose = true
     }
-    dependencies {
-        debugImplementation(compose.uiTooling)
-    }
 }
-
-dependencies {
-    ksp(libs.androidx.room.compiler)
-}
-
-room {
-    schemaDirectory("$projectDir/schemas")
-}
-
-//room {
-//    schemaDirectory("$projectDir/schemas")
-//}
-
-//dependencies {
-////    implementation(libs.ui.tooling.preview.android)
-//    add("kspCommonMainMetadata", libs.room.compiler)
-//}
-//
-//tasks.withType<org.jetbrains.kotlin.gradle.dsl.KotlinCompile<*>>().configureEach {
-//    if (name != "kspCommonMainKotlinMetadata") {
-//        dependsOn("kspCommonMainKotlinMetadata")
-//    }
-//}

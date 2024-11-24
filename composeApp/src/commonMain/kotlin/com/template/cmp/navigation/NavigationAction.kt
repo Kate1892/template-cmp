@@ -14,8 +14,16 @@ sealed class NavigationAction(val fromRoot: Boolean = false) {
     data object NavigateToLogin : NavigationAction(fromRoot = true)
 
     @Serializable
-    data object NavigateToNotes : NavigationAction(fromRoot = true)
+    data object NavigateToNotes : NavigationAction()
 
     @Serializable
     data object NavigateToCreateNote : NavigationAction()
+
+    @Serializable
+    data object NavigateToCheckPermission : NavigationAction()
+
+    @Serializable
+    class NavigateBackToLogin(
+        val targetRoute: NavigateToLogin = NavigateToLogin,
+    ) : NavigationAction()
 }

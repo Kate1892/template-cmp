@@ -70,8 +70,6 @@ fun NoteTextField(
     imeAction = imeAction,
     isError = false,
     errorText = "",
-//    isError = fieldState.validationState.isError,
-//    errorText = fieldState.validationState.errorText,
     visualTransformation = visualTransformation,
     startContent = startContent,
     startContentAmount = startContentAmount,
@@ -187,8 +185,7 @@ fun NoteBasicTextField(
                 color = if (!isError) {
                     (if (isEnabled) color else colorDisabled)
                 } else {
-                    Color.Red
-//                    NoteTheme.colors.inputFieldErrorText
+                    NoteTheme.colors.textAccent
                 },
                 fontSize = 14.sp,
             ),
@@ -213,10 +210,6 @@ fun NoteBasicTextField(
             }
         )
         VSpacer(size = 4.dp)
-//        ErrorTextLayout(
-//            modifier = modifier,
-//            errorText = errorText,
-//        )
     }
 }
 
@@ -275,12 +268,10 @@ private fun extractTextFieldBorderColor(borderState: TextFieldBorderState): Colo
     return when (borderState) {
         TextFieldBorderState.InFocus -> {
             Color.Red
-//            NoteTheme.colors.borderColor
         }
 
         TextFieldBorderState.InFocusAndErred -> {
             Color.Red
-//            NoteTheme.colors.borderErrorColor
         }
 
         else -> {

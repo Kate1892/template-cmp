@@ -16,6 +16,7 @@ import io.ktor.http.URLProtocol
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 
+/** for testing ktor*/
 private const val BASE_URL = "jsonplaceholder.typicode.com"
 
 class ApiHttpClient {

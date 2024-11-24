@@ -1,6 +1,7 @@
 package com.template.cmp.features.auth.login.mvvm
 
 import com.template.cmp.common.mvvm.BaseViewModel
+import com.template.cmp.navigation.NavigationAction
 import org.jetbrains.compose.resources.getString
 import template_cmp.composeapp.generated.resources.Res
 import template_cmp.composeapp.generated.resources.scr_login_continue_button_title
@@ -11,31 +12,10 @@ import template_cmp.composeapp.generated.resources.scr_splash_screen_title
 
 class LoginViewModel : BaseViewModel<LoginUiEvent, LoginState>(LoginState()) {
 
-//    init {
-//        updateState {
-//            copy(
-//                userNameFieldState = userNameFieldState
-//                    .initValidations(
-//                        listOf(
-//                            emptyFieldCondition(getString(MR.strings.scr_any_field_is_required)),
-//                            TextFieldValidationCondition(
-//                                validCondition = validationService::isPhoneValid,
-//                                errorText = getString(
-//                                    MR.strings.scr_any_wrong_data
-//                                ),
-//                            ),
-//                        )
-//                    )
-//                    .initChangeAllowed(validationService::isPhoneChangeAllowed)
-//                    .initMaxLength(PHONE_NUMBER_MAX_LENGTH),
-//            )
-//        }
-//    }
-
     override fun processUiEvent(event: LoginUiEvent) {
         when (event) {
             LoginUiEvent.OnContinueButtonClicked -> {
-
+                navigate(NavigationAction.NavigateToCheckPermission)
             }
 
             is LoginUiEvent.OnEmailFieldFocusChanged -> {

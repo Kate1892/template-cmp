@@ -5,11 +5,8 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.RoomDatabaseConstructor
 
-//@Suppress("NO_ACTUAL_FOR_EXPECT")
-//internal expect object AppDatabaseCtor : RoomDatabaseConstructor<PeopleDatabase>
-
 @Suppress("NO_ACTUAL_FOR_EXPECT")
-expect object AppDatabaseCtor : RoomDatabaseConstructor<PeopleDatabase> {
+expect object PeopleDatabaseConstructor : RoomDatabaseConstructor<PeopleDatabase> {
     override fun initialize(): PeopleDatabase
 }
 
@@ -17,8 +14,11 @@ expect object AppDatabaseCtor : RoomDatabaseConstructor<PeopleDatabase> {
     entities = [Person::class],
     version = 1
 )
-@ConstructedBy(AppDatabaseCtor::class)
+@ConstructedBy(PeopleDatabaseConstructor::class)
 abstract class PeopleDatabase : RoomDatabase() {
-
     abstract fun peopleDao(): PeopleDao
+
+    companion object {
+        const val DB_NAME = "people.db"
+    }
 }

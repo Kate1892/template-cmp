@@ -6,8 +6,16 @@
     <string name="scr_login_screen_title">Template.Notes</string>
     <string name="scr_login_screen_description">Log in or create an account</string>
     <string name="scr_login_continue_button_title">Continue</string>
-    <string name="scr_login_username_placeholder">Enter your username</string>
-    <string name="scr_login_password_placeholder">Enter your password</string>
+    <string name="scr_login_username_placeholder">Username (mock)</string>
+    <string name="scr_login_password_placeholder">Password (mock)</string>
     <string name="scr_login_password_title">Password</string>
 
+    <string name="scr_permission_request_button_title">Request permission</string>
+    <string name="scr_permission_open_settings_button_title">Open setting</string>
+    <string name="scr_permission_continue_button_title">Continue</string>
+    <string name="scr_permission_permission_denied_title">Permission denied</string>
+    <string name="scr_permission_permission_granted_title">Permission granted</string>
+
+    <string name="scr_notes_screen_title">Main screen title</string>
+    <string name="scr_notes_logout_button_title">Log out</string>
 </resources>

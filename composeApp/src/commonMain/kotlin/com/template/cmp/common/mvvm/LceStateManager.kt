@@ -13,8 +13,6 @@ import org.koin.mp.KoinPlatformTools
 private const val NO_INTERNET_ERROR_TIMEOUT = 15 // sec
 
 class LceStateManager(
-//    private val connectivityService: ConnectivityService,
-//    private val deviceService: DeviceService,
 
 ) {
     private val localScope = CoroutineScope(
@@ -37,22 +35,6 @@ class LceStateManager(
 
     fun subscribeDataWithUiLifecycle() {
         loadScreenDataAction()
-//        uiLifecycleSubscriptionJob?.cancel()
-//        uiLifecycleSubscriptionJob = connectivityService.isInternetConnectionAvailable.onEach { isConnected ->
-//            when (isConnected) {
-//                false -> {
-//                    if (!isNoInternetErrorShowing()) {
-//                        showNoInternetError()
-//                    }
-//                }
-//
-//                true -> {
-//                    if (isNoInternetErrorShowing() && !isLoading()) {
-//                        loadScreenDataAction()
-//                    }
-//                }
-//            }
-//        }.launchIn(localScope)
     }
 
     fun unsubscribeDataWithUiLifecycle() {
@@ -72,6 +54,4 @@ class LceStateManager(
     fun hideLoading() {
         updateState { copy(isLoading = false) }
     }
-
-
 }
